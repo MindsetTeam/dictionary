@@ -7,7 +7,7 @@ import AboutStack from "./AboutStack";
 import BookmarkStack from "./BookmarkStack";
 import Sidebar from "../components/Sidebar";
 
-import { Feather, AntDesign, Entypo } from "@expo/vector-icons";
+import { Feather, AntDesign, FontAwesome } from "@expo/vector-icons";
 
 const drawerOptions = {
    Home: {
@@ -33,7 +33,7 @@ const drawerOptions = {
       navigationOptions: {
          title: "Bookmark",
          drawerIcon: ({ tintColor }) => (
-            <Entypo name="bookmark" size={18} color={tintColor} />
+            <FontAwesome name="bookmark-o" size={18} color={tintColor} />
          ),
       },
    },
@@ -43,7 +43,7 @@ const drawer = createDrawerNavigator(drawerOptions, {
    contentComponent: (props) => {
       return <Sidebar {...props}></Sidebar>;
    },
-   hideStatusBar: true,
+   // hideStatusBar: true,
    contentOptions: {
       activeBackgroundColor: "#6A0E00",
       activeTintColor: "#fff",

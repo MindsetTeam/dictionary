@@ -7,18 +7,19 @@ import {
    ScrollView,
 } from "react-native";
 
-import { Ionicons, Feather } from "@expo/vector-icons";
+import { Ionicons, Feather, FontAwesome } from "@expo/vector-icons";
 
 export default class Detail extends Component {
    constructor(props) {
       super(props);
       this.state = {
          fontSize: 18,
+         isBookmarked: false,
       };
    }
    zoomIn = () => {
       let { fontSize } = this.state;
-      if (fontSize > 40) return;
+      if (fontSize > 50) return;
       this.setState({
          fontSize: fontSize + 2,
       });
@@ -31,8 +32,15 @@ export default class Detail extends Component {
          fontSize: fontSize - 2,
       });
    };
+
+   toggleBookmark = () => {
+      this.setState({
+         isBookmarked: !this.state.isBookmarked,
+      });
+   };
    render() {
       const { navigation } = this.props;
+      const { fontSize, isBookmarked } = this.state;
       return (
          <View style={styles.container}>
             <View style={styles.controlsContainer}>
@@ -42,6 +50,16 @@ export default class Detail extends Component {
                <TouchableOpacity style={styles.control}>
                   <Ionicons name="ios-arrow-forward" size={20} color="#fff" />
                </TouchableOpacity>
+               <TouchableOpacity
+                  style={styles.control}
+                  onPress={this.toggleBookmark}
+               >
+                  {isBookmarked ? (
+                     <FontAwesome name="bookmark" size={20} color="#6A0E00" />
+                  ) : (
+                     <FontAwesome name="bookmark-o" size={20} color="#fff" />
+                  )}
+               </TouchableOpacity>
                <TouchableOpacity style={styles.control} onPress={this.zoomIn}>
                   <Feather name="zoom-in" size={20} color="#fff" />
                </TouchableOpacity>
@@ -49,15 +67,20 @@ export default class Detail extends Component {
                   <Feather name="zoom-out" size={20} color="#fff" />
                </TouchableOpacity>
             </View>
-            <ScrollView style={styles.textContainer}>
-               <Text
-                  style={{ paddingBottom: 15, fontSize: this.state.fontSize }}
-               >
-                  Detail Screen {navigation.getParam("id")}
-               </Text>
-               <Text style={{ fontSize: this.state.fontSize }}>
-                  {navigation.getParam("body")}
-               </Text>
+            <ScrollView style={{ flex: 1 }}>
+               <View style={styles.textContainer}>
+                  <Text
+                     style={{
+                        paddingBottom: 15,
+                        fontSize: fontSize,
+                     }}
+                  >
+                     Detail Screen {navigation.getParam("id")}
+                  </Text>
+                  <Text style={{ fontSize: fontSize }}>
+                     {navigation.getParam("body")}
+                  </Text>
+               </View>
             </ScrollView>
          </View>
       );
@@ -72,7 +95,7 @@ const styles = StyleSheet.create({
    controlsContainer: {
       flexDirection: "row",
       justifyContent: "space-around",
-      backgroundColor: "#aaa",
+      backgroundColor: "#bbb",
    },
    control: {
       flex: 1,

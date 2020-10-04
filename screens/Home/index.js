@@ -8,6 +8,7 @@ import {
    ActivityIndicator,
    FlatList,
 } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
 
 import ListItem from "../../components/ListItem";
 
@@ -17,6 +18,8 @@ export default class index extends Component {
       this.state = {
          loading: true,
          data: null,
+         filterData: null,
+         searchText: "",
       };
    }
 
@@ -27,12 +30,29 @@ export default class index extends Component {
             this.setState({
                loading: false,
                data: data,
+               filterData: data,
             });
          });
    }
 
+   handleSearchTextChange = (value) => {
+      const { data, filterData } = this.state;
+      if (value != "") {
+         this.setState({
+            filterData: data.filter((d) =>
+               d.title.split(" ")[0].startsWith(value.toLowerCase())
+            ),
+         });
+         return;
+      }
+      this.setState({
+         filterData: data,
+      });
+   };
+
    render() {
-      const { data, loading } = this.state;
+      const { data, loading, searchText, filterData } = this.state;
+
       if (loading) {
          return (
             <View style={styles.loadingContainer}>
@@ -48,17 +68,26 @@ export default class index extends Component {
             <TextInput
                style={styles.textSearch}
                placeholder="Search Text ..."
+               onChangeText={this.handleSearchTextChange}
+               autoCorrect={false}
             ></TextInput>
-            <FlatList
-               data={data}
-               renderItem={({ item }) => (
-                  <ListItem
-                     navigation={this.props.navigation}
-                     word={item}
-                  ></ListItem>
-               )}
-               keyExtractor={data.id}
-            ></FlatList>
+            {filterData.length > 0 && (
+               <FlatList
+                  data={filterData}
+                  renderItem={({ item }) => (
+                     <ListItem
+                        navigation={this.props.navigation}
+                        word={item}
+                     ></ListItem>
+                  )}
+                  keyExtractor={filterData.id}
+               ></FlatList>
+            )}
+            {filterData.length === 0 && (
+               <ScrollView style={styles.wordNotFound}>
+                  <Text>word not found</Text>
+               </ScrollView>
+            )}
          </View>
       );
    }
@@ -81,5 +110,10 @@ const styles = StyleSheet.create({
       borderBottomWidth: 1,
       borderColor: "#ccc",
       fontSize: 15,
+   },
+   wordNotFound: {
+      paddingVertical: 10,
+      paddingHorizontal: 10,
+      backgroundColor: "#eee",
    },
 });
