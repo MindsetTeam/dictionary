@@ -1,10 +1,21 @@
 import { StatusBar } from "expo-status-bar";
-import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import React, {useEffect} from "react";
+import { StyleSheet, Text, View, AsyncStorage } from "react-native";
+
 
 import AppNavigator from "./AppNavigator";
 
 export default function App() {
+   // useEffect( async ()=>{
+   //    const favoriteWords = await AsyncStorage.getItem('favoriteWords');
+   //    if(favoriteWords){
+   //       AsyncStorage.setItem('favoriteWords', '');
+   //       console.log("hi");
+   //    }else{
+   //       console.log("object");
+   //    }
+   // },[])
+
    return (
       // <View style={styles.container}>
       //    <Text>Open up App.js to start working on your app!</Text>

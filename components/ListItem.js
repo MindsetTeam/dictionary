@@ -3,9 +3,11 @@ import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 
 const ListItem = ({ navigation, word }) => {
    return (
-      <TouchableOpacity onPress={() => navigation.navigate("Detail", word)}>
+      <TouchableOpacity onPress={() => navigation.navigate("Detail", {
+         searchWord: word
+      })}>
          <View style={styles.item}>
-            <Text>{word.title.split(" ")[0]}</Text>
+            <Text style={styles.text}>{word}</Text>
          </View>
       </TouchableOpacity>
    );
@@ -15,8 +17,12 @@ export default ListItem;
 
 const styles = StyleSheet.create({
    item: {
-      paddingVertical: 10,
-      paddingHorizontal: 10,
+      paddingVertical: 11,
+      paddingHorizontal: 11,
       backgroundColor: "#eee",
+      marginBottom: 2
    },
+   text:{
+      fontSize: 16,
+   }
 });

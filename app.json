@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "dictionary",
-    "slug": "dictionary",
-    "version": "1.0.0",
+    "name": "MOJ Dictionary",
+    "slug": "moj-dictionary",
+    "version": "1.0.1",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/logo.png",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
@@ -16,11 +16,15 @@
     "assetBundlePatterns": [
       "**/*"
     ],
+    "android": {
+      "package": "com.mindset.mojlawdictionary",
+      "versionCode": 2
+    },
     "ios": {
       "supportsTablet": true
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/logo.png"
     }
   }
 }
