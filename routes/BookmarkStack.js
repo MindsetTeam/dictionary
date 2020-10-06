@@ -3,7 +3,7 @@ import React from "react";
 
 import Header from "../components/Header";
 import Bookmark from "../screens/Bookmark/index";
-import Detail from "../screens/Home/Detail";
+import Detail from "../screens/Detail";
 
 const screens = {
   Bookmark: {
