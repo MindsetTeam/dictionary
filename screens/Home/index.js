@@ -7,6 +7,8 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   FlatList,
+  Button,
+  Linking,
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
@@ -16,6 +18,7 @@ export default class index extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      textSearch: null,
       loading: true,
       data: null,
       filterData: null,
@@ -93,6 +96,7 @@ export default class index extends Component {
               .then((data2) => {
                 const dataParse2 = JSON.parse(data2);
                 this.setState({
+                  textSearch: value,
                   loading: false,
                   data: [...data[1], ...dataParse2[1]],
                   filterData: [...data[1], ...dataParse2[1]],
@@ -100,6 +104,7 @@ export default class index extends Component {
               });
           } else {
             this.setState({
+              textSearch: value,
               filterData: data[1],
             });
           }
@@ -139,7 +144,20 @@ export default class index extends Component {
         )}
         {filterData.length === 0 && (
           <ScrollView style={styles.wordNotFound}>
-            <Text>ទិន្នន័យមិនទាន់បញ្ជូល</Text>
+            <View style={styles.containerWordNotFound}>
+              <Text style={{ marginBottom: 8 }}>ទិន្នន័យមិនទាន់បញ្ជូល</Text>
+              <Button
+                color="#6A0E00"
+                title="Search On Google Translate"
+                onPress={() => {
+                  Linking.openURL(
+                    encodeURI(
+                      `https://translate.google.com/#auto/km/${this.state.textSearch}`
+                    )
+                  );
+                }}
+              />
+            </View>
           </ScrollView>
         )}
       </View>
@@ -169,5 +187,9 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 10,
     backgroundColor: "#eee",
+  },
+  containerWordNotFound: {
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
